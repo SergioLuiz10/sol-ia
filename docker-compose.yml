@@ -1,4 +1,4 @@
-name: solIA
+name: sol-ia    
 services:
   db:
     image: pgvector/pgvector:pg16
