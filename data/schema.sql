@@ -16,3 +16,23 @@ CREATE TABLE IF NOT EXISTS pedidos (
     data_pedido date NOT NULL DEFAULT CURRENT_DATE,
     data_prevista date 
 );
+
+CREATE TABLE IF NOT EXISTS conversas(
+    id SERIAL PRIMARY KEY,
+    telefone VARCHAR(20) NOT NULL,
+    pergunta TEXT NOT NULL,
+    resposta TEXT,
+    tool_usada VARCHAR(255),
+    transferiu BOOLEAN NOT NULL DEFAULT FALSE,
+    criado_em TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP
+    
+);
+
+CREATE TABLE IF NOT EXISTS transferencias (
+    id SERIAL PRIMARY KEY,
+    conversa_id INT REFERENCES conversas(id),
+    telefone VARCHAR(20) NOT NULL,
+    motivo VARCHAR(255) NOT NULL,
+    data_transferencia TIMESTAMPTZ NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    atendido BOOLEAN NOT NULL DEFAULT FALSE    
+);
