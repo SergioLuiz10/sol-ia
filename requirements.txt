@@ -7,3 +7,4 @@ langchain
 langchain-openai
 langchain-postgres
 httpx
+langchain-text-splitters
