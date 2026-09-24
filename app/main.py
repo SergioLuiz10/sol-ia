@@ -1,6 +1,6 @@
 from fastapi import FastAPI
 
-from app.routers import chat, metricas
+from app.routers import chat, metricas, whatsapp
 
 app = FastAPI(
     title="Assistente de WhatsApp - Distribuidora Sol",
@@ -10,6 +10,7 @@ app = FastAPI(
 
 app.include_router(chat.router)
 app.include_router(metricas.router)
+app.include_router(whatsapp.router)
 
 
 # usado pelo servico de deploy para saber se a aplicacao esta no ar
