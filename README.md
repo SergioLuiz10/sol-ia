@@ -4,6 +4,8 @@ Assistente de WhatsApp para a Distribuidora Sol. Responde sobre política de tro
 
 No ar em: https://sol-ia-production.up.railway.app/docs
 
+O canal de WhatsApp esta ligado via Evolution API: mensagem recebida cai no webhook `/whatsapp`, passa pelo mesmo agente do `/chat` e a resposta volta pelo WhatsApp.
+
 ## Stack
 
 FastAPI · LangChain · OpenAI (gpt-4o-mini) · Postgres + PGVector · Docker · Railway
@@ -28,7 +30,8 @@ app/
 ├── tools/          o que cada tool faz de verdade (SQL e RAG)
 ├── rag/            ingestão da política e configuração do PGVector
 ├── repositories/   acesso à tabela de conversas
-├── routers/        /chat, /metricas, /health
+├── services/       regra de atendimento, independente do canal
+├── routers/        /chat, /whatsapp, /metricas, /health
 └── schemas.py      contrato de entrada e saída da API
 data/               schema, dados fictícios e política de trocas
 prompt/sistema.md   regras do agente
@@ -43,6 +46,12 @@ prompt/sistema.md   regras do agente
 **Transferência registrada, não só anunciada.** A tool grava telefone e motivo na tabela `transferencias`. O motivo é escrito pelo modelo, o que dá visibilidade do que mais cai para humano e do que vale automatizar depois.
 
 **Toda conversa é logada** com a tool usada e se houve transferência. É o que alimenta a meta de 60% do PRD, em `/metricas`, e o que permite descobrir por que o agente errou quando ele errar.
+
+**O canal não conhece a regra.** `/chat` e `/whatsapp` são só porta de entrada: os dois chamam a mesma função em `services/atendimento.py`, que fala com o agente e grava a conversa. O agente não sabe por onde a mensagem chegou, e trocar de provedor de WhatsApp mexe em um arquivo só.
+
+**Evolution API em vez da API oficial.** A API oficial da Meta exige conta Business verificada, o que não fecha no prazo de um teste. A Evolution roda como serviço próprio e expõe a mesma ideia: webhook na entrada, POST na saída.
+
+**Lista de números permitidos.** O número pareado é pessoal, então o webhook só responde quem está em `NUMEROS_PERMITIDOS`. Grupos, áudios e figurinhas são ignorados. Fica em variável de ambiente para mudar sem deploy.
 
 **Railway em vez de VPS.** HTTPS pronto (o webhook do WhatsApp exige) e deploy a cada push. Para um cliente real, avaliaria VPS ou cloud pelo custo e pelo controle.
 
@@ -59,6 +68,7 @@ Transferir não é erro: é o comportamento certo quando o dado não existe. A t
 - A busca por bairro ignora maiúscula, mas não acento: "Federacao" não encontra "Federação". Resolveria com a extensão `unaccent`.
 - Sem memória entre mensagens: cada mensagem é tratada isolada.
 - A transferência para na tabela. O próximo passo é avisar o atendente no WhatsApp.
+- O WhatsApp está num número pessoal com lista de permitidos, o que serve para demonstrar. Em produção seria um número dedicado e a API oficial.
 - Sem testes automatizados. Para medir corretude, montaria um conjunto de perguntas com resposta esperada e rodaria a cada mudança no prompt.
 - O aviso de horário comercial ficou de fora desta versão.
 

@@ -1,5 +1,5 @@
-# Regra de atendimento: recebe telefone e mensagem, devolve a resposta em texto.
-# Nao sabe por qual canal a mensagem chegou (HTTP, WhatsApp, etc).
+# Recebe telefone e mensagem do cliente, 
+# processa usando o agente e registra a conversa.
 
 from app.agent import agente
 from app.repositories.conversas import registrar_conversa
