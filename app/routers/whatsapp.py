@@ -1,4 +1,5 @@
-# Canal de WhatsApp: recebe o webhook da Evolution API e responde pelo mesmo canal.
+#recebe os dados da whatsapp e envia para o agente de atendimento responder
+#
 import os
 
 import httpx

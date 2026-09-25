@@ -30,7 +30,7 @@ def responder(telefone: str, mensagem: str) -> str:
 
     transferiu = tool_usada == "transferir_para_humano"
 
-    registrar_conversa(
+    registrar_conversa( # registra a conversa no banco de dados
         telefone=telefone,
         pergunta=mensagem,
         resposta=resposta,

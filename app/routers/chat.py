@@ -7,7 +7,8 @@ from app.services.atendimento import responder
 router = APIRouter()
 
 # Endpoint para processar mensagens de chat.
-# Recebe um objeto ChatRequest com o telefone e a mensagem do cliente. Retorna um ChatResponse com a resposta do atendimento.
+# Recebe um objeto ChatRequest com o telefone e a mensagem do cliente. 
+# Retorna um ChatResponse com a resposta do atendimento.
 @router.post("/chat", response_model=ChatResponse)
 def chat(requisicao: ChatRequest) -> ChatResponse:
     resposta = responder(requisicao.telefone, requisicao.mensagem)

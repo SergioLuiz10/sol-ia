@@ -1,3 +1,6 @@
+# Ask Sérgio — Backend
+![CI](https://github.com/SergioLuiz10/-sol-ia/actions/workflows/ci.yml/badge.svg)
+
 # sol-ia
 
 Assistente de WhatsApp para a Distribuidora Sol. Responde sobre política de trocas, prazo de entrega por bairro e status de pedido, e transfere para um atendente quando não sabe.

@@ -4,12 +4,12 @@ URL="https://sol-ia-production.up.railway.app"
 TEL="71999990001"
 
 perguntas=(
-  "quanto tempo demora a entrega na pituba?"
-  "cade meu pedido 002?"
-  "posso devolver um produto que nao gostei?"
-  "meu pedido 004 chega quando?"
-  "voces dao desconto em compra grande?"
-  "cade meu pedido 999?"
+  "quanto tempo demora a entrega na pituba?" # prazo por bairro (bairro)
+  "cade meu pedido 002?" # status do pedido (pedidos)
+  "posso devolver um produto que nao gostei?" #política (RAG)
+  "meu pedido 004 chega quando?" # status do pedido
+  "voces dao desconto em compra grande?" # fora do escopo, tem que transferir
+  "cade meu pedido 999?" # pedido que não existe, não pode inventar
 )
 
 for p in "${perguntas[@]}"; do

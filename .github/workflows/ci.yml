@@ -1,0 +1,17 @@
+name: CI
+
+on: # roda em todo push e em todo pull request.
+  push:
+  pull_request:
+
+jobs: # define os trabalhos que serão executados no CI
+  testes:
+    runs-on: ubuntu-latest
+    steps: # define os passos que serão executados no trabalho de testes
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5 # Configura a versão do Python para o ambiente de teste
+        with:
+          python-version: "3.12"
+      - run: pip install -r requirements.txt
+      - run: python -m compileall app
+
